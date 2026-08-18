@@ -107,15 +107,37 @@ button {
   margin-bottom: 24px;
 }
 
-.section-kicker span {
+.section-kicker > span:first-child {
   position: relative;
   color: var(--purple);
   font-weight: 500;
   line-height: 24px;
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
+}
+
+.now-underline {
+  display: block;
+  width: 40px;
+  height: 10px;
+  margin-top: -4px;
+  overflow: visible;
+}
+
+.now-underline-path {
+  fill: none;
+  stroke: var(--purple);
+  stroke-width: 1px;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+}
+
+.js .now-underline-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.65, 0, 0.2, 1) 240ms;
+}
+
+.js .section-kicker.is-visible .now-underline-path {
+  stroke-dashoffset: 0;
 }
 
 .intro-copy {
@@ -168,7 +190,8 @@ button {
 
 .discipline-label {
   margin-bottom: 32px;
-  color: var(--purple);
+  color: var(--text);
+  font-weight: 500;
 }
 
 .project-block + .project-block {
@@ -551,7 +574,7 @@ button {
 
   .identity a,
   .identity span,
-  .section-kicker span,
+  .section-kicker > span:first-child,
   .section-heading h2,
   .project-heading h3,
   .discipline-label {

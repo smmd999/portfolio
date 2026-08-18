@@ -3,6 +3,50 @@
   const images = Array.from(document.querySelectorAll('.work-image'));
   const revealItems = Array.from(document.querySelectorAll('.reveal'));
 
+  // Keep the designer-day count tied to calendar days rather than timers.
+  // Aug 18, 2026 is day 1,328; every following Toronto calendar day adds one.
+  const designerDay = document.querySelector('#designer-day');
+
+  function getTorontoDateKey(date = new Date()) {
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Toronto',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(date);
+
+    const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  }
+
+  function calendarDayNumber(dateKey) {
+    const [year, month, day] = dateKey.split('-').map(Number);
+    return Math.floor(Date.UTC(year, month - 1, day) / 86400000);
+  }
+
+  function ordinal(value) {
+    const mod100 = value % 100;
+    if (mod100 >= 11 && mod100 <= 13) return `${value.toLocaleString('en-US')}th`;
+    const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }[value % 10] || 'th';
+    return `${value.toLocaleString('en-US')}${suffix}`;
+  }
+
+  function updateDesignerDay() {
+    if (!designerDay) return;
+
+    const anchorDay = Number(designerDay.dataset.anchorDay);
+    const anchorDate = designerDay.dataset.anchorDate;
+    const today = getTorontoDateKey();
+    const elapsedDays = calendarDayNumber(today) - calendarDayNumber(anchorDate);
+    const currentDay = Math.max(anchorDay, anchorDay + elapsedDays);
+
+    designerDay.textContent = ordinal(currentDay);
+  }
+
+  updateDesignerDay();
+  // Recompute periodically so a tab left open across midnight updates itself.
+  window.setInterval(updateDesignerDay, 60_000);
+
   // Fade gallery images in only once pixels are ready.
   images.forEach((img) => {
     const markLoaded = () => img.classList.add('loaded');
