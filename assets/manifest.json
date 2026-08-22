@@ -1,5 +1,29 @@
 [
   {
+    "source": "Desktop/Pancake (Non YC).png",
+    "slug": "yc-hero-pancake",
+    "width": 3840,
+    "height": 2048,
+    "thumb": "assets/thumb/yc-hero-pancake.jpg",
+    "full": "assets/full/yc-hero-pancake.jpg"
+  },
+  {
+    "source": "Desktop/Vendo.png",
+    "slug": "yc-hero-vendo",
+    "width": 3840,
+    "height": 2048,
+    "thumb": "assets/thumb/yc-hero-vendo.jpg",
+    "full": "assets/full/yc-hero-vendo.jpg"
+  },
+  {
+    "source": "Desktop/Buildbox.png",
+    "slug": "yc-hero-buildbox",
+    "width": 3840,
+    "height": 2048,
+    "thumb": "assets/thumb/yc-hero-buildbox.jpg",
+    "full": "assets/full/yc-hero-buildbox.jpg"
+  },
+  {
     "source": "YC Hero/RonanRX.png",
     "slug": "yc-hero-ronanrx",
     "width": 3840,
@@ -78,14 +102,6 @@
     "height": 2048,
     "thumb": "assets/thumb/yc-hero-respan.webp",
     "full": "assets/full/yc-hero-respan.webp"
-  },
-  {
-    "source": "Bustem Hero/Bustem.png",
-    "slug": "bustem-hero-bustem",
-    "width": 3840,
-    "height": 2048,
-    "thumb": "assets/thumb/bustem-hero-bustem.webp",
-    "full": "assets/full/bustem-hero-bustem.webp"
   },
   {
     "source": "Product/GutFix/New Gutty AI Chat.png",
