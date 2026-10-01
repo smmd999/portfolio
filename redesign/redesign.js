@@ -196,7 +196,7 @@
       form.reset();
       setOtherRoleVisibility(false);
       startedAt.value = String(Date.now());
-      setStatus('submitted', 'success');
+      setStatus('Submitted', 'success');
     } catch (error) {
       setStatus(error.message || 'Something went wrong. Please try again.', 'error');
     } finally {
