@@ -41,12 +41,12 @@ a {
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
   text-decoration-color: currentColor;
-  transition: color 140ms ease;
+  transition: filter 140ms ease;
 }
 
 a:any-link:hover,
 a:any-link:focus-visible {
-  color: color-mix(in srgb, currentColor 94%, black);
+  filter: brightness(0.94);
 }
 
 .link-arrow {
@@ -54,6 +54,7 @@ a:any-link:focus-visible {
   width: 8px;
   height: 8px;
   margin-left: 2px;
+  color: inherit;
   transform: translateY(-5px);
 }
 
