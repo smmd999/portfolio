@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#fdfdfc" name="theme-color"/>
+<meta content="noindex, nofollow, noarchive" name="robots"/>
+<title>Redesign submissions — Sarmad</title>
+<link href="../../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="../../styles.css" rel="stylesheet"/>
+<link href="admin.css" rel="stylesheet"/>
+</head>
+<body class="admin-page">
+<main class="admin-shell">
+<section aria-labelledby="login-title" class="admin-login" id="login-view">
+<p class="admin-kicker">Private</p>
+<h1 id="login-title">Redesign submissions</h1>
+<p class="admin-muted">Enter the admin passcode to continue.</p>
+<form class="login-form" id="login-form">
+<label for="passcode">Passcode</label>
+<input autocomplete="current-password" id="passcode" name="passcode" required type="password"/>
+<div class="login-actions">
+<button type="submit">Continue</button>
+<p aria-live="polite" class="admin-status" id="login-status" role="status"></p>
+</div>
+</form>
+</section>
+
+<section aria-labelledby="viewer-title" class="admin-viewer" hidden id="viewer-view">
+<header class="viewer-header">
+<div>
+<p class="admin-kicker">Private</p>
+<h1 id="viewer-title">Redesign submissions</h1>
+<p class="admin-muted" id="submission-count">Loading…</p>
+</div>
+<button class="text-button" id="logout-button" type="button">Log out</button>
+</header>
+
+<div aria-live="polite" class="viewer-status" id="viewer-status" role="status"></div>
+<div class="submission-list" id="submission-list"></div>
+<button class="load-more" hidden id="load-more-button" type="button">Load more</button>
+</section>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -96,6 +96,17 @@ button {
   line-height: 24px;
 }
 
+.updated-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 7px;
+}
+
+.updated-links a {
+  color: var(--purple);
+  font-weight: 500;
+}
+
 .now-section {
   padding-top: 128px;
 }
