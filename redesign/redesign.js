@@ -24,7 +24,10 @@
   startedAt.value = String(Date.now());
 
   requestAnimationFrame(() => {
-    requestAnimationFrame(() => intro.classList.add('is-drawn'));
+    requestAnimationFrame(() => {
+      intro.classList.add('is-drawn');
+      document.querySelectorAll('.reveal').forEach((item) => item.classList.add('is-visible'));
+    });
   });
 
   function setOtherRoleVisibility(shouldShow, focus = false) {

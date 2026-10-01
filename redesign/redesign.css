@@ -55,13 +55,6 @@
   text-decoration: underline;
 }
 
-.redesign-proof img {
-  width: 8px;
-  height: 8px;
-  margin-left: 2px;
-  transform: translateY(-5px);
-}
-
 .redesign-promise {
   display: flex;
   flex-direction: column;

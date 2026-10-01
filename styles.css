@@ -41,10 +41,20 @@ a {
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
   text-decoration-color: currentColor;
+  transition: color 140ms ease;
 }
 
-a:hover {
-  text-decoration-color: transparent;
+a:any-link:hover,
+a:any-link:focus-visible {
+  color: color-mix(in srgb, currentColor 94%, black);
+}
+
+.link-arrow {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 2px;
+  transform: translateY(-5px);
 }
 
 button,
@@ -105,6 +115,14 @@ button {
 .updated-links a {
   color: var(--purple);
   font-weight: 500;
+}
+
+.redesign-form-section.reveal {
+  --reveal-delay: 80ms;
+}
+
+.redesign-social.reveal {
+  --reveal-delay: 140ms;
 }
 
 .now-section {
