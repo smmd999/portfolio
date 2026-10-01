@@ -272,6 +272,8 @@
 .other-role-reveal-inner {
   min-height: 0;
   overflow: hidden;
+  margin: -4px;
+  padding: 4px;
 }
 
 .stage-field legend {
@@ -333,30 +335,9 @@
 
 .submit-button {
   position: relative;
-  display: inline-flex;
-  min-height: 60px;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 24px;
   border: 0;
-  border-radius: 10px;
-  background: var(--text);
-  color: var(--bg);
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 28px;
-  transition: background-color 180ms ease, opacity 220ms ease, transform 320ms var(--ease);
-}
-
-.submit-button:hover:not(:disabled) {
-  background: #11110f;
-  transform: translateY(-1px);
-}
-
-.submit-button:focus-visible {
-  outline: 2px solid var(--purple);
-  outline-offset: 3px;
+  transition: background-color 180ms ease, opacity 220ms ease;
 }
 
 .submit-button:disabled {
@@ -374,8 +355,8 @@
   animation: redesign-spin 700ms linear infinite;
 }
 
-.redesign-form.is-loading .submit-label {
-  margin-right: 9px;
+.redesign-form.is-loading .portfolio-button-arrow {
+  display: none;
 }
 
 .redesign-form.is-loading .submit-spinner {

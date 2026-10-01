@@ -106,8 +106,7 @@ button {
   line-height: 16px;
 }
 
-.header-cta {
-  grid-area: cta;
+.portfolio-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -120,11 +119,15 @@ button {
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 26.4px;
-  text-decoration: none;
   transition: background-color 180ms ease, filter 140ms ease;
 }
 
-.header-cta-arrow {
+.header-cta {
+  grid-area: cta;
+  text-decoration: none;
+}
+
+.portfolio-button-arrow {
   display: inline-flex;
   width: 14px;
   height: 14px;
@@ -133,7 +136,7 @@ button {
   flex: 0 0 auto;
 }
 
-.header-cta-arrow svg {
+.portfolio-button-arrow svg {
   display: block;
   width: 14px;
   height: 14px;
@@ -142,13 +145,17 @@ button {
   transform: rotate(0deg);
 }
 
-.site-header .header-cta:any-link:hover,
-.site-header .header-cta:any-link:focus-visible {
+.portfolio-button:hover:not(:disabled),
+.portfolio-button:focus-visible {
   background: #cececa;
+}
+
+.site-header .portfolio-button:any-link:hover,
+.site-header .portfolio-button:any-link:focus-visible {
   filter: none;
 }
 
-.site-header .header-cta:focus-visible {
+.portfolio-button:focus-visible {
   outline: 2px solid var(--purple);
   outline-offset: 3px;
 }
