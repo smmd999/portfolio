@@ -9,6 +9,7 @@
   const submitButton = form.querySelector('.submit-button');
   const status = document.querySelector('#form-status');
   const statusMessage = status.querySelector('.form-status-message');
+  const statusHome = status.parentElement;
   const startedAt = document.querySelector('#form-started-at');
   let statusTimer;
 
@@ -134,6 +135,13 @@
   function setStatus(message = '', type = '') {
     window.clearTimeout(statusTimer);
     statusTimer = undefined;
+
+    // The form's reveal animation applies transform/filter to its ancestors,
+    // which makes position: fixed relative to the content instead of viewport.
+    // Move only the success toast to body so its fixed positioning is viewport-based.
+    const targetParent = type === 'success' ? document.body : statusHome;
+    if (status.parentElement !== targetParent) targetParent.append(status);
+
     status.className = `form-status${type ? ` is-${type}` : ''}`;
     statusMessage.textContent = message;
     status.hidden = !message;
