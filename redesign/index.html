@@ -116,7 +116,10 @@
 <span aria-hidden="true" class="portfolio-button-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M5.99992 3.33333H12.6667V10.5M12.6667 3.33333L3.33333 12.6667" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span>
 <span aria-hidden="true" class="submit-spinner"></span>
 </button>
-<p aria-live="polite" class="form-status" id="form-status" role="status"></p>
+<p aria-atomic="true" aria-live="polite" class="form-status" hidden id="form-status" role="status">
+<svg aria-hidden="true" class="form-status-icon" fill="none" viewBox="0 0 16 16"><path d="m3.5 8.25 3.05 3.05L12.5 5.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"/></svg>
+<span class="form-status-message"></span>
+</p>
 </div>
 </form>
 </section>

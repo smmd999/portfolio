@@ -8,7 +8,9 @@
   const otherRoleInput = document.querySelector('#role-other');
   const submitButton = form.querySelector('.submit-button');
   const status = document.querySelector('#form-status');
+  const statusMessage = status.querySelector('.form-status-message');
   const startedAt = document.querySelector('#form-started-at');
+  let statusTimer;
 
   const fieldMap = {
     work_email: document.querySelector('#work-email'),
@@ -130,8 +132,18 @@
   }
 
   function setStatus(message = '', type = '') {
-    status.textContent = message;
+    window.clearTimeout(statusTimer);
+    statusTimer = undefined;
     status.className = `form-status${type ? ` is-${type}` : ''}`;
+    statusMessage.textContent = message;
+    status.hidden = !message;
+
+    if (type === 'success') {
+      statusTimer = window.setTimeout(() => {
+        status.classList.add('is-dismissing');
+        statusTimer = window.setTimeout(() => setStatus(), 180);
+      }, 5000);
+    }
   }
 
   roleSelect.addEventListener('change', () => {
@@ -176,7 +188,7 @@
       form.reset();
       setOtherRoleVisibility(false);
       startedAt.value = String(Date.now());
-      setStatus('Thanks — your website is in. I’ll be in touch if it’s selected.', 'success');
+      setStatus('submitted', 'success');
     } catch (error) {
       setStatus(error.message || 'Something went wrong. Please try again.', 'error');
     } finally {
