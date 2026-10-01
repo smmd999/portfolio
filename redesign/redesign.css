@@ -334,24 +334,24 @@
 .submit-button {
   position: relative;
   display: inline-flex;
-  min-height: 44px;
+  min-height: 60px;
   align-items: center;
   justify-content: center;
-  padding: 9px 16px;
-  border: 1px solid var(--text);
-  border-radius: 7px;
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 10px;
   background: var(--text);
   color: var(--bg);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  transition: opacity 220ms ease, transform 320ms var(--ease), box-shadow 320ms var(--ease);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  transition: background-color 180ms ease, opacity 220ms ease, transform 320ms var(--ease);
 }
 
 .submit-button:hover:not(:disabled) {
+  background: #11110f;
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(33, 32, 28, 0.14);
 }
 
 .submit-button:focus-visible {
