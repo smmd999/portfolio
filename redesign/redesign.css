@@ -381,10 +381,10 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  border: 1px solid rgba(33, 32, 28, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
-  background: #fff;
-  color: var(--muted);
+  background: #26734d;
+  color: #fff;
   font-size: 14px;
   line-height: 20px;
   animation: redesign-toast-in 240ms var(--ease) both;
