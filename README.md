@@ -22,6 +22,7 @@ The static pages work with this preview. The submission and admin APIs require V
 - `redesign/` — the lead-magnet form page and private submissions viewer
 - `api/` — Vercel functions for form submission and passcode-protected admin access
 - `server/redesign.js` — shared server-side validation, Supabase, and signed-cookie helpers
+- `server/redesign-email.js` — email notifications for new redesign requests
 - `supabase/redesign_submissions.sql` — one-time database setup
 
 The site has no build step or runtime dependency. Vercel serves the static files and runs the API files as Node.js serverless functions.
@@ -37,3 +38,7 @@ The site has no build step or runtime dependency. Vercel serves the static files
 3. Deploy, submit one test response at `/redesign`, and confirm it appears at `/redesign/submissions`.
 
 The table has RLS enabled, grants no access to anonymous or authenticated browser roles, and is only read/written by the server-side secret role.
+
+Every valid submission is saved and then emailed to **smmd999a@gmail.com** through FormSubmit. This form has been activated for `https://www.smmd.me/redesign`; it needs no Resend account, API key, or additional environment variables. The email includes all submitted details, a link to the private submissions viewer, and the submitter's email as Reply-To.
+
+The API waits for email acceptance before returning success and retries failed sends up to three times. If email delivery cannot be accepted, the submission remains saved and the form shows an error. A manual retry after that error may create another saved submission. Provider acceptance does not guarantee inbox delivery; the deployed flow should be checked with a test email after changing the recipient or form URL.
