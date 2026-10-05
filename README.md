@@ -22,7 +22,7 @@ The static pages work with this preview. The submission and admin APIs require V
 - `redesign/` — the lead-magnet form page and private submissions viewer
 - `api/` — Vercel functions for form submission and passcode-protected admin access
 - `server/redesign.js` — shared server-side validation, Supabase, and signed-cookie helpers
-- `server/redesign-email.js` — email notifications for new redesign requests
+- `server/redesign-email.js` — validated email notification payloads for new requests
 - `supabase/redesign_submissions.sql` — one-time database setup
 
 The site has no build step or runtime dependency. Vercel serves the static files and runs the API files as Node.js serverless functions.
@@ -41,4 +41,4 @@ The table has RLS enabled, grants no access to anonymous or authenticated browse
 
 Every valid submission is saved and then emailed to **smmd999a@gmail.com** through FormSubmit. This form has been activated for `https://www.smmd.me/redesign`; it needs no Resend account, API key, or additional environment variables. The email includes all submitted details, a link to the private submissions viewer, and the submitter's email as Reply-To.
 
-The API waits for email acceptance before returning success and retries failed sends up to three times. If email delivery cannot be accepted, the submission remains saved and the form shows an error. A manual retry after that error may create another saved submission. Provider acceptance does not guarantee inbox delivery; the deployed flow should be checked with a test email after changing the recipient or form URL.
+The API saves the submission and returns its validated notification payload. The browser sends it using FormSubmit’s supported AJAX flow, waits for email acceptance before showing success, and retries failed sends up to three times. Sending from Vercel’s datacenter is blocked by FormSubmit. If notification fails, the submission stays saved; retrying the unchanged form retries only its email. Provider acceptance does not guarantee inbox delivery; verify with a test email after changing the recipient or form URL. No browser secrets are used.

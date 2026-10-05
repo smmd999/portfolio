@@ -12,6 +12,7 @@
   const statusHome = status.parentElement;
   const startedAt = document.querySelector('#form-started-at');
   let statusTimer;
+  let pendingNotification;
 
   const fieldMap = {
     work_email: document.querySelector('#work-email'),
@@ -179,19 +180,30 @@
     setStatus('Submitting…');
 
     try {
-      const response = await fetch('/api/redesign-submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json().catch(() => ({}));
+      // If only notification failed, retry it without saving the same form twice.
+      const formKey = JSON.stringify(data);
+      if (pendingNotification?.formKey !== formKey) {
+        const response = await fetch('/api/redesign-submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
-        if (result.fields) {
-          Object.entries(result.fields).forEach(([name, message]) => setFieldError(name, message));
+        if (!response.ok) {
+          if (result.fields) {
+            Object.entries(result.fields).forEach(([name, message]) => setFieldError(name, message));
+          }
+          throw new Error(result.message || 'Something went wrong. Please try again.');
         }
-        throw new Error(result.message || 'Something went wrong. Please try again.');
+
+        pendingNotification = { formKey, notification: result.notification };
       }
+
+      if (pendingNotification.notification) {
+        await window.sendRedesignNotification(pendingNotification.notification);
+      }
+      pendingNotification = undefined;
 
       form.reset();
       setOtherRoleVisibility(false);

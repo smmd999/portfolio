@@ -3,7 +3,7 @@ const {
   supabaseRequest,
   validateSubmission,
 } = require('../server/redesign');
-const { sendSubmissionEmail } = require('../server/redesign-email');
+const { submissionNotification } = require('../server/redesign-email');
 
 module.exports = async function redesignSubmit(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -53,15 +53,8 @@ module.exports = async function redesignSubmit(req, res) {
     return res.status(503).json({ message: 'Unable to submit right now. Please try again shortly.' });
   }
 
-  try {
-    // Await the provider's acceptance before showing the submission success toast.
-    // The database copy is already safe even if the email service is unavailable.
-    await sendSubmissionEmail(validation.data);
-    return res.status(201).json({ ok: true });
-  } catch (error) {
-    console.error('Unable to email redesign submission:', error.message);
-    return res.status(503).json({
-      message: 'Your request was saved, but the notification could not be sent. Please try again shortly.',
-    });
-  }
+  // FormSubmit supports browser AJAX. Requests from Vercel's datacenter are
+  // blocked, so return the validated email payload after saving the request.
+  // The browser awaits email acceptance before showing its success toast.
+  return res.status(201).json({ ok: true, notification: submissionNotification(validation.data) });
 };

@@ -1,6 +1,8 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const submit = require('../api/redesign-submit');
+const { submissionNotification } = require('../server/redesign-email');
+const { sendRedesignNotification } = require('../redesign/notification');
 
 const submission = {
   work_email: 'lead@example.com',
@@ -45,9 +47,11 @@ test('stores the request and awaits email acceptance before returning success', 
     return Response.json({ success: 'true' });
   });
   const res = response();
-  const request = submit({ method: 'POST', headers: {}, body: submission }, res);
+  await submit({ method: 'POST', headers: {}, body: submission }, res);
+  let accepted = false;
+  const request = sendRedesignNotification(res.body.notification).then(() => { accepted = true; });
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(res.statusCode, undefined);
+  assert.equal(accepted, false);
   assert.equal(calls.length, 2);
   assert.equal(calls[1].url, 'https://formsubmit.co/ajax/smmd999a@gmail.com');
   assert.equal(calls[1].body._replyto, submission.work_email);
@@ -55,7 +59,7 @@ test('stores the request and awaits email acceptance before returning success', 
   assert.equal(calls[1].body['Improvement goal'], submission.improvement_goal);
   releaseEmail();
   await request;
-  assert.equal(res.statusCode, 201);
+  assert.equal(accepted, true);
 });
 
 test('retries a temporary email outage', async (t) => {
@@ -66,10 +70,8 @@ test('retries a temporary email outage', async (t) => {
     if (emailAttempts === 1) throw new Error('Temporary network failure');
     return Response.json({ success: true });
   });
-  const res = response();
-  await submit({ method: 'POST', headers: {}, body: submission }, res);
+  await sendRedesignNotification(submissionNotification(submission));
   assert.equal(emailAttempts, 2);
-  assert.equal(res.statusCode, 201);
 });
 
 test('does not report success when an HTTP 200 contains an email rejection', async (t) => {
@@ -79,11 +81,8 @@ test('does not report success when an HTTP 200 contains an email rejection', asy
     emailAttempts += 1;
     return Response.json({ success: 'false', message: 'Activation required' });
   });
-  const res = response();
-  await submit({ method: 'POST', headers: {}, body: submission }, res);
+  await assert.rejects(sendRedesignNotification(submissionNotification(submission)), /saved/);
   assert.equal(emailAttempts, 3);
-  assert.equal(res.statusCode, 503);
-  assert.match(res.body.message, /saved/);
 });
 
 test('does not send email if the database cannot save the submission', async (t) => {
