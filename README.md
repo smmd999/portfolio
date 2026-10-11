@@ -1,4 +1,4 @@
-# Sarmad Ahmad — Portfolio
+# Sarmad — Portfolio
 
 Static portfolio implementation based on the supplied Figma file, with a Vercel serverless backend for the hero-redesign lead form.
 
