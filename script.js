@@ -6,6 +6,7 @@
   // Keep the designer-day count tied to calendar days rather than timers.
   // Aug 18, 2026 is day 1,328; every following Toronto calendar day adds one.
   const designerDay = document.querySelector('#designer-day');
+  const age = document.querySelector('#age');
 
   function getTorontoDateKey(date = new Date()) {
     const parts = new Intl.DateTimeFormat('en-CA', {
@@ -43,9 +44,18 @@
     designerDay.textContent = ordinal(currentDay);
   }
 
+  function updateAge() {
+    if (!age) return;
+    const today = getTorontoDateKey();
+    const year = Number(today.slice(0, 4));
+    age.textContent = String(year - 2009 - (today.slice(5) < '09-14' ? 1 : 0));
+  }
+
+  updateAge();
   updateDesignerDay();
   // Recompute periodically so a tab left open across midnight updates itself.
   window.setInterval(updateDesignerDay, 60_000);
+  window.setInterval(updateAge, 60_000);
 
   // Fade gallery images in only once pixels are ready.
   images.forEach((img) => {
